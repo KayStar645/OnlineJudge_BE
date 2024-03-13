@@ -52,11 +52,11 @@ Modern browsers(chrome, firefox) and Internet Explorer 10+.
 
 ## INSTALL
 + use python 3.8.0
-+ run command to install package python: pip install -r {your path}/requirements.txt
++ run command to install package python: pip install -r deploy/requirements.txt
 + please install PostgresSQL 12 and Redis lastest version: https://redis.io/docs/install/install-redis/install-redis-on-windows/
 + [Optional] please check dev-setting.py to change your username & password and port of Database to connect
-+ Run command to migrate database before start server: python manage.py migrate
 + python manage.py makemigrations
 + python manage.py migrate
++ python manage.py inituser --username=root --password=rootroot --action=create_super_admin
 + Final run commnad to start server: python manage.py runserver
 + [Optional] for run test API run command: python run_test.py {name_application_api}nvm 
