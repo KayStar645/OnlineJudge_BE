@@ -110,7 +110,6 @@ class TestCaseZipProcessor(object):
                 else:
                     return sorted(ret, key=natural_sort_key)
 
-
 class TestCaseAPI(CSRFExemptAPIView, TestCaseZipProcessor):
     request_parsers = ()
 
@@ -151,12 +150,25 @@ class TestCaseAPI(CSRFExemptAPIView, TestCaseZipProcessor):
             file = form.cleaned_data["file"]
         else:
             return self.error("Upload failed")
-        zip_file = f"/tmp/{rand_str()}.zip"
+        
+        temp_dir = '/tmp/'
+        if not os.path.exists(temp_dir):
+            try:
+                os.makedirs(temp_dir)
+            except OSError as e:
+                print(f"Error creating temporary directory: {e}")
+                return self.error("Error creating temporary directory")
+
+        zip_file = f"{temp_dir}{rand_str()}.zip"
+        print(zip_file)
+
         with open(zip_file, "wb") as f:
             for chunk in file:
                 f.write(chunk)
+
         info, test_case_id = self.process_zip(zip_file, spj=spj)
         os.remove(zip_file)
+
         return self.success({"id": test_case_id, "info": info, "spj": spj})
 
 
