@@ -82,7 +82,7 @@ class SubmissionAPI(APIView):
         print("Hệ thống chấm điểm chỗ này")
         # use this for debug
         JudgeDispatcher(submission.id, problem.id).judge()
-        #judge_task.send(submission.id, problem.id)
+        judge_task.send(submission.id, problem.id)
         if hide_id:
             return self.success()
         else:
