@@ -4,7 +4,7 @@ from account.decorators import login_required, check_contest_permission
 from contest.models import ContestStatus, ContestRuleType
 from judge.tasks import judge_task
 from options.options import SysOptions
-# from judge.dispatcher import JudgeDispatcher
+from judge.dispatcher import JudgeDispatcher
 from problem.models import Problem, ProblemRuleType
 from utils.api import APIView, validate_serializer
 from utils.cache import cache
@@ -48,6 +48,7 @@ class SubmissionAPI(APIView):
     @validate_serializer(CreateSubmissionSerializer)
     @login_required
     def post(self, request):
+        print("PHẠM TẤN THUẬN")
         data = request.data
         hide_id = False
         if data.get("contest_id"):
@@ -78,9 +79,10 @@ class SubmissionAPI(APIView):
                                                problem_id=problem.id,
                                                ip=request.session["ip"],
                                                contest_id=data.get("contest_id"))
+        print("Hệ thống chấm điểm chỗ này")
         # use this for debug
-        # JudgeDispatcher(submission.id, problem.id).judge()
-        judge_task.send(submission.id, problem.id)
+        JudgeDispatcher(submission.id, problem.id).judge()
+        #judge_task.send(submission.id, problem.id)
         if hide_id:
             return self.success()
         else:
@@ -102,7 +104,7 @@ class SubmissionAPI(APIView):
             submission_data = SubmissionModelSerializer(submission).data
         else:
             submission_data = SubmissionSafeModelSerializer(submission).data
-        # 是否有权限取消共享
+        # Bạn có quyền hủy chia sẻ không?
         submission_data["can_unshare"] = submission.check_user_permission(request.user, check_share=False)
         return self.success(submission_data)
 
