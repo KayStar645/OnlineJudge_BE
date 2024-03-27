@@ -140,6 +140,7 @@ class APIView(View):
         return data
 
     def dispatch(self, request, *args, **kwargs):
+        print("lỗi server nè")
         if self.request_parsers:
             try:
                 request.data = self._get_request_data(self.request)

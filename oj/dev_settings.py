@@ -21,7 +21,7 @@ REDIS_CONF = {
 }
 
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 

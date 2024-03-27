@@ -60,3 +60,15 @@ Modern browsers(chrome, firefox) and Internet Explorer 10+.
 + python manage.py inituser --username=root --password=rootroot --action=create_super_admin
 + Final run commnad to start server: python manage.py runserver
 + [Optional] for run test API run command: python run_test.py {name_application_api}nvm 
+
+# Compiler & Judger
+## C ( GCC 9.4 )
+- Cài đặt GCC
+```
+sudo apt update
+sudo apt install build-essential
+```
+# Theo dõi queue redis
+```
+rq-dashboard --redis-url redis://127.0.0.1:6379/0
+```
